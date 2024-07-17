@@ -1,16 +1,14 @@
-/** Express app for message.ly. */
-
-
+//src/app.js
 const express = require("express");
 const cors = require("cors");
 const { authenticateJWT } = require("./middleware/auth");
 
-const ExpressError = require("./expressError")
+const ExpressError = require("./middleware/expressError");
 const app = express();
 
 // allow both form-encoded and json body parsing
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // allow connections to all routes from any browser
 app.use(cors());
@@ -19,7 +17,6 @@ app.use(cors());
 app.use(authenticateJWT);
 
 /** routes */
-
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 const messageRoutes = require("./routes/messages");
@@ -28,16 +25,20 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes);
 
-/** 404 handler */
+// landing page route
+app.get("/", (req, res) => {
+  res.send("Welcome to Messagely!");
+});
 
-app.use(function(req, res, next) {
+/** 404 handler */
+app.use(function (req, res, next) {
   const err = new ExpressError("Not Found", 404);
   return next(err);
 });
 
 /** general error handler */
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   if (process.env.NODE_ENV != "test") console.error(err.stack);
 

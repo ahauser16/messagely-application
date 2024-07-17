@@ -1,6 +1,6 @@
-const db = require("../db");
-const User = require("../models/user");
-const Message = require("../models/message");
+const db = require("../src/db/db");
+const User = require("../src/models/user");
+const Message = require("../src/models/message");
 
 
 describe("Test User class", function () {
@@ -33,7 +33,7 @@ describe("Test User class", function () {
     let isValid = await User.authenticate("test", "password");
     expect(isValid).toBeTruthy();
 
-    isValid =  await User.authenticate("test", "xxx");
+    isValid = await User.authenticate("test", "xxx");
     expect(isValid).toBeFalsy();
   });
 
@@ -136,6 +136,6 @@ describe("Test messages part of User class", function () {
   });
 });
 
-afterAll(async function() {
+afterAll(async function () {
   await db.end();
 });
