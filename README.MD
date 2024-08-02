@@ -61,6 +61,70 @@ Also, I created a `db` sub-folder and moved the `data.sql` and `db.js` files int
 
 We’ve provided a module file for the ***User*** class.
 
+***models/user.js***
+```
+/** User class for message.ly */
+
+
+
+/** User of the site. */
+
+class User {
+
+  /** register new user -- returns
+   *    {username, password, first_name, last_name, phone}
+   */
+
+  static async register({username, password, first_name, last_name, phone}) { }
+
+  /** Authenticate: is this username/password valid? Returns boolean. */
+
+  static async authenticate(username, password) { }
+
+  /** Update last_login_at for user */
+
+  static async updateLoginTimestamp(username) { }
+
+  /** All: basic info on all users:
+   * [{username, first_name, last_name, phone}, ...] */
+
+  static async all() { }
+
+  /** Get: get user by username
+   *
+   * returns {username,
+   *          first_name,
+   *          last_name,
+   *          phone,
+   *          join_at,
+   *          last_login_at } */
+
+  static async get(username) { }
+
+  /** Return messages from this user.
+   *
+   * [{id, to_user, body, sent_at, read_at}]
+   *
+   * where to_user is
+   *   {username, first_name, last_name, phone}
+   */
+
+  static async messagesFrom(username) { }
+
+  /** Return messages to this user.
+   *
+   * [{id, from_user, body, sent_at, read_at}]
+   *
+   * where from_user is
+   *   {username, first_name, last_name, phone}
+   */
+
+  static async messagesTo(username) { }
+}
+
+module.exports = User;
+```
+
 Fill in the method bodies.
 
 Make sure you read the docstrings carefully so your functions return the right output. Also, any method that tries to act on a particular user (like the ***.get()*** method) should throw an error if the user cannot be found.
@@ -69,9 +133,31 @@ If you get stuck, note that the ***Message*** class has been completed for you
 
 Once you have finished, you can run the tests we’ve provided for the ***User*** and ***Message*** models (make sure to create and seed the ***messagely_test*** database first!).
 
+```
+$jest -i
+```
+
 ### Step 3: Fix the routes
 
 We’ve provided stub files and docstrings from the routes.
+
+***routes/auth.js***
+```
+/** POST /login - login: {username, password} => {token}
+ *
+ * Make sure to update their last-login!
+ *
+ **/
+
+
+/** POST /register - register user: registers, logs in, and returns token.
+ *
+ * {username, password, first_name, last_name, phone} => {token}.
+ *
+ *  Make sure to update their last-login!
+ */
+```
+
 
 In order, implement these routes. Make sure to check security appropriately:
 
