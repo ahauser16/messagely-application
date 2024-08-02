@@ -1,6 +1,6 @@
-const db = require("../src/db/db");
-const User = require("../src/models/user");
-const Message = require("../src/models/message");
+const db = require("../db");
+const User = require("../models/user");
+const Message = require("../models/message");
 
 
 describe("Test Message class", function () {
